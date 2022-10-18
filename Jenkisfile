@@ -1,0 +1,44 @@
+pipeline {
+
+    agent { label 'LocalPC' }
+
+    stages {
+
+        stage('Clean') {
+            steps {
+                sh 'mvn clean'
+            }
+        }
+
+        stage('Functional Test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+
+    }
+
+    post {
+
+        always {
+            notifyEmail()
+            junit 'target/surefire-reports/*.xml'
+            cucumber fileIncludePattern: '*cucumber.json',
+                     jsonReportDirectory: 'functional-test/target/CucumberReports/'
+        }
+
+    }
+
+}
+
+def notifyEmail() {
+    emailext(
+            subject: 'Execution report#${BUILD_NUMBER}',
+            body: """
+            Execution:
+            Build status: ${BUILD_STATUS}
+            Job: ${JOB_NAME}
+            Build  Number: ${BUILD_NUMBER}
+            More information in the following link: ${RUN_DISPLAY_URL}""",
+            to: user_email)
+}
