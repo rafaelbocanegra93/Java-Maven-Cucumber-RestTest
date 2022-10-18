@@ -21,10 +21,9 @@ pipeline {
     post {
 
         always {
-            notifyEmail()
             junit 'target/surefire-reports/*.xml'
-            cucumber fileIncludePattern: '*cucumber.json',
-                     jsonReportDirectory: 'functional-test/target/CucumberReports/'
+            notifyEmail()
+
         }
 
     }
