@@ -35,7 +35,10 @@ mvn test
 ```
 If the execution is succeeded, the terminal you could view the results
 
-![plot](ImagesReadme/LocalExecution.png)
+![Terminal](ImagesReadme/LocalExecution.png)
 
 ## CI on Jenkins
 If you don't have server for CI you can use the docker executing  `docker-compose up` on the folder `JenkinsServer`
+![Terminal](ImagesReadme/TestReport.png)
+![Terminal](ImagesReadme/JenkinsExecution.png)
+
